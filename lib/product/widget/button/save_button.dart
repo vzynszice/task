@@ -6,6 +6,7 @@ import 'package:to_do_app2/view/task/viewmodel/task_view_model.dart';
 
 class SaveButton extends StatelessWidget {
   const SaveButton({
+    super.key,
     required this.viewModel,
   });
 
@@ -17,7 +18,7 @@ class SaveButton extends StatelessWidget {
         onPressed: () async {
           viewModel!.onChangeValue(viewModel!.textEditingController.text);
           viewModel!.textEditingController.text = "";
-          viewModel!.setDatas();
+          viewModel!.setDatas(viewModel?.taskModel!.index ?? 0);
         },
         style: ElevatedButton.styleFrom(
             backgroundColor: ColorConstants.saveButtonColor),

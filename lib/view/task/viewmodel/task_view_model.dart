@@ -14,20 +14,16 @@ part 'task_view_model.g.dart';
 class TaskViewModel = _TaskViewModelBase with _$TaskViewModel;
 
 abstract class _TaskViewModelBase extends BaseViewModel with Store {
-  TaskModel? taskModel;
   TextEditingController textEditingController = TextEditingController();
+
+  @observable
+  TaskModel? taskModel;
 
   @observable
   int taskCount = 0;
 
   @observable
-  var taskModels = ObservableList<TaskModel>.of([
-    TaskModel(""),
-    TaskModel(""),
-    TaskModel(""),
-    TaskModel(""),
-    TaskModel("")
-  ]);
+  List<TaskModel> taskModels = ObservableList();
 
   @action
   void finishTask(int index) {
@@ -35,9 +31,9 @@ abstract class _TaskViewModelBase extends BaseViewModel with Store {
   }
 
   @action
-  Future<void> setDatas() async {
+  Future<void> setDatas(int index) async {
     await localeManager.setStringValue(
-        PreferencesKeys.TOKEN, taskModels[taskCount].taskDescription);
+        PreferencesKeys.TOKEN, taskModels[index].taskDescription);
     taskCount++;
   }
 
@@ -53,7 +49,10 @@ abstract class _TaskViewModelBase extends BaseViewModel with Store {
 
   @action
   void onChangeValue(String value) {
+    taskModels.add(TaskModel(""));
     taskModels[taskCount].taskDescription = value;
+    taskModels[taskCount].index = taskCount;
+    taskModel = taskModels[taskCount];
   }
 
   @override

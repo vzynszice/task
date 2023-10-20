@@ -6,11 +6,12 @@ import 'package:to_do_app2/product/constants/shape/shape_constants.dart';
 import 'package:to_do_app2/view/task/viewmodel/task_view_model.dart';
 
 class TaskCardWidget extends StatelessWidget {
-  TaskCardWidget(
-      {super.key,
-      required this.viewModel,
-      required this.themeData,
-      required this.index});
+  TaskCardWidget({
+    super.key,
+    required this.viewModel,
+    required this.themeData,
+    required this.index,
+  });
 
   final TaskViewModel? viewModel;
   final ThemeData themeData;
@@ -32,7 +33,7 @@ class TaskCardWidget extends StatelessWidget {
           ),
           onTap: () async {
             viewModel!.finishTask(index);
-            viewModel!.setDatas();
+            viewModel!.setDatas(index);
             viewModel!.taskCount--;
           },
           shape: ShapeConstants.listTileShape,

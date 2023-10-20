@@ -9,6 +9,22 @@ part of 'task_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$TaskViewModel on _TaskViewModelBase, Store {
+  late final _$taskModelAtom =
+      Atom(name: '_TaskViewModelBase.taskModel', context: context);
+
+  @override
+  TaskModel? get taskModel {
+    _$taskModelAtom.reportRead();
+    return super.taskModel;
+  }
+
+  @override
+  set taskModel(TaskModel? value) {
+    _$taskModelAtom.reportWrite(value, super.taskModel, () {
+      super.taskModel = value;
+    });
+  }
+
   late final _$taskCountAtom =
       Atom(name: '_TaskViewModelBase.taskCount', context: context);
 
@@ -29,13 +45,13 @@ mixin _$TaskViewModel on _TaskViewModelBase, Store {
       Atom(name: '_TaskViewModelBase.taskModels', context: context);
 
   @override
-  ObservableList<TaskModel> get taskModels {
+  List<TaskModel> get taskModels {
     _$taskModelsAtom.reportRead();
     return super.taskModels;
   }
 
   @override
-  set taskModels(ObservableList<TaskModel> value) {
+  set taskModels(List<TaskModel> value) {
     _$taskModelsAtom.reportWrite(value, super.taskModels, () {
       super.taskModels = value;
     });
@@ -61,8 +77,8 @@ mixin _$TaskViewModel on _TaskViewModelBase, Store {
       AsyncAction('_TaskViewModelBase.setDatas', context: context);
 
   @override
-  Future<void> setDatas() {
-    return _$setDatasAsyncAction.run(() => super.setDatas());
+  Future<void> setDatas(int index) {
+    return _$setDatasAsyncAction.run(() => super.setDatas(index));
   }
 
   late final _$clearDataAsyncAction =
@@ -123,6 +139,7 @@ mixin _$TaskViewModel on _TaskViewModelBase, Store {
   @override
   String toString() {
     return '''
+taskModel: ${taskModel},
 taskCount: ${taskCount},
 taskModels: ${taskModels},
 isLoading: ${isLoading}
